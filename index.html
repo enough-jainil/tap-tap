@@ -498,11 +498,35 @@
       let particles = [];            // sprinkle/confetti particles (single declaration!)
       let drips = [];                // gooey falling drops
 
-      // Sound: small dunk/beep using WebAudio (offline)
+      // Sound: small dunk/beep using WebAudio (mobile-friendly)
       let audioCtx = null;
-      function beep() {
+      let audioInitialized = false;
+
+      async function initAudio() {
+        if (!audioCtx) {
+          try {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+            // Resume audio context if suspended (required for mobile)
+            if (audioCtx.state === 'suspended') {
+              await audioCtx.resume();
+            }
+
+            audioInitialized = true;
+          } catch (e) {
+            console.warn('Audio initialization failed:', e);
+          }
+        }
+      }
+
+      async function beep() {
         try {
-          if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          if (!audioInitialized) {
+            await initAudio();
+          }
+
+          if (!audioCtx || audioCtx.state !== 'running') return;
+
           const o = audioCtx.createOscillator();
           const g = audioCtx.createGain();
           o.type = 'triangle';
@@ -619,9 +643,9 @@
       // Draw the dessert mountain with per-layer remaining fill
       function drawMountain() {
         const { width: W, height: H } = canvas;
-        const cx = W * 0.5, baseY = H * 0.85; // ground - balanced position
+        const cx = W * 0.5, baseY = H * 0.82; // ground - positioned to prevent bottom cutoff
         const maxW = Math.min(W * 0.76, H * 0.72); // mound width
-        const height = H * 0.55; // balanced height leaving space for top UI
+        const height = H * 0.52; // adjusted height to ensure bottom layer is fully visible
 
         // Ground court arc (neon)
         ctx.save();
@@ -868,8 +892,14 @@
       }
 
       // Pointer/touch events
-      canvas.addEventListener('pointerdown', (e) => {
+      canvas.addEventListener('pointerdown', async (e) => {
         e.preventDefault(); // Prevent default scrolling behavior
+
+        // Initialize audio on first user interaction (mobile requirement)
+        if (!audioInitialized) {
+          await initAudio();
+        }
+
         const rect = canvas.getBoundingClientRect();
         const x = (e.clientX - rect.left) * DPR;
         const y = (e.clientY - rect.top) * DPR;
