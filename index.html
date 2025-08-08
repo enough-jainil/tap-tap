@@ -3,7 +3,8 @@
 
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
   <title>Tap to Scoop: Dessert Basketball Miner — Leak & Empty Edition</title>
   <style>
     :root {
@@ -115,8 +116,12 @@
     canvas#game {
       position: absolute;
       inset: 0;
-      touch-action: none;
+      touch-action: manipulation;
       cursor: pointer;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      -ms-touch-action: manipulation;
     }
 
     .tapHint {
@@ -864,11 +869,12 @@
 
       // Pointer/touch events
       canvas.addEventListener('pointerdown', (e) => {
+        e.preventDefault(); // Prevent default scrolling behavior
         const rect = canvas.getBoundingClientRect();
         const x = (e.clientX - rect.left) * DPR;
         const y = (e.clientY - rect.top) * DPR;
         onTap(x, y);
-      }, { passive: true });
+      }, { passive: false });
 
       // Main loop
       function loop() {
