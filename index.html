@@ -614,9 +614,9 @@
       // Draw the dessert mountain with per-layer remaining fill
       function drawMountain() {
         const { width: W, height: H } = canvas;
-        const cx = W * 0.5, baseY = H * 0.80; // ground
+        const cx = W * 0.5, baseY = H * 0.85; // ground - balanced position
         const maxW = Math.min(W * 0.76, H * 0.72); // mound width
-        const height = H * 0.50;
+        const height = H * 0.55; // balanced height leaving space for top UI
 
         // Ground court arc (neon)
         ctx.save();
@@ -649,8 +649,8 @@
           ctx.save();
           // Clip to the portion that is still filled
           ctx.beginPath();
-          // Rounded rect for whole layer
-          const rr = 24 * DPR;
+          // Rounded rect for whole layer - reduced radius for less rounded appearance
+          const rr = 8 * DPR;
           ctx.moveTo(x + rr, top);
           ctx.arcTo(x + w, top, x + w, bottom, rr);
           ctx.arcTo(x + w, bottom, x, bottom, rr);
