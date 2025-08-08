@@ -4,271 +4,233 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-  <title>Tap to Scoop: Dessert Basketball Miner — V4.1 (Kawaii Stadium)</title>
+  <title>Tap to Scoop: Dessert Basketball Miner — Leak & Empty Edition</title>
   <style>
     :root {
-      --ink: #1e1520;
-      --soft: #705a68;
-      --neon1: #8a2be2;
-      --neon2: #00e6a8;
-      --neon3: #ff4d6d;
-      --neon4: #ffa600;
-      --card: #ffffffee;
-      --shadow: 0 18px 50px rgba(0, 0, 0, .18);
+      --bg: #0b1020;
+      /* deep space */
+      --fg: #fefefe;
+      /* text */
+      --accent: #ff7ad9;
+      /* pink neon */
+      --accent2: #7ae2ff;
+      /* cyan neon */
+      --barbg: #1a2240;
     }
 
     html,
     body {
       height: 100%;
       margin: 0;
-      font-family: ui-rounded, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-      color: var(--ink);
-      background:
-        radial-gradient(140vw 100vh at 15% -10%, #ffeaf3 0%, transparent 60%),
-        radial-gradient(140vw 120vh at 90% 0%, #e8fffb 0%, transparent 60%),
-        linear-gradient(#fff, #f7fbff 70%, #eef7ff);
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
-    }
-
-    * {
-      box-sizing: border-box
+      background: radial-gradient(1200px 600px at 50% -20%, #1b2450 0%, #0b1020 60%, #060914 100%);
+      color: var(--fg);
+      font-family: ui-rounded, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Inter, Arial, sans-serif;
     }
 
     .wrap {
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 12px clamp(10px, 2.8vw, 22px) 26px
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100%;
     }
 
     header {
+      width: 100%;
+      max-width: 820px;
+      padding: 16px 14px;
+      box-sizing: border-box;
       display: flex;
+      gap: 12px;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
-      background: var(--card);
-      backdrop-filter: blur(8px);
-      border-radius: 22px;
-      padding: 12px 14px;
-      box-shadow: var(--shadow)
     }
 
     .title {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 900
+      font-weight: 800;
+      letter-spacing: .3px;
+      text-shadow: 0 0 10px var(--accent), 0 0 18px var(--accent2);
     }
 
-    .badge {
-      background: linear-gradient(90deg, var(--neon1), var(--neon2));
-      color: #fff;
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-size: .82em;
-      box-shadow: 0 8px 22px rgba(138, 43, 226, .28)
+    .score {
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
 
     .hud {
-      display: flex;
+      width: 100%;
+      max-width: 820px;
+      padding: 0 14px 12px;
+      box-sizing: border-box;
+    }
+
+    .bars {
+      display: grid;
       gap: 8px;
-      flex-wrap: wrap;
-      font-weight: 800
-    }
-
-    .pill {
-      background: #fff;
-      border-radius: 999px;
-      padding: 6px 12px;
-      box-shadow: var(--shadow);
-      display: flex;
-      gap: 6px;
-      align-items: center
-    }
-
-    .meter {
-      --p: 0;
-      position: relative;
-      width: 140px;
-      height: 10px;
-      border-radius: 999px;
-      background: #eef2f6;
-      overflow: hidden;
-      box-shadow: inset 0 1px 2px rgba(0, 0, 0, .06)
-    }
-
-    .meter::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: calc(var(--p)*1%);
-      background: linear-gradient(90deg, var(--neon3), var(--neon4));
-    }
-
-    .progress {
-      margin: 10px 0;
-      height: 16px;
-      border-radius: 999px;
-      background: #eef2f6;
-      overflow: hidden;
-      box-shadow: inset 0 1px 2px rgba(0, 0, 0, .06), var(--shadow)
     }
 
     .bar {
+      height: 14px;
+      background: var(--barbg);
+      border-radius: 999px;
+      box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .06);
+    }
+
+    .bar>div {
       height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #8affc1, #7ae2ff, #ff7ad9);
+      box-shadow: 0 0 14px rgba(122, 226, 255, .6);
       width: 0%;
-      background: repeating-linear-gradient(45deg, var(--neon1), var(--neon1) 12px, var(--neon2) 12px, var(--neon2) 24px);
-      transition: width .12s ease
+      transition: width .18s ease;
+    }
+
+    .labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12.5px;
+      opacity: .9;
+      margin-top: 4px
     }
 
     .stage {
       position: relative;
       width: 100%;
+      max-width: 820px;
       aspect-ratio: 9/16;
-      border-radius: 22px;
+      border-radius: 24px;
       overflow: hidden;
-      box-shadow: var(--shadow);
-      background: radial-gradient(60% 80% at 50% 100%, #d8f1ff 0%, #ffffff 35%, transparent 65%)
+      box-shadow: 0 10px 40px rgba(0, 0, 0, .5), inset 0 0 0 1px rgba(255, 255, 255, .06);
     }
 
-    canvas {
-      width: 100%;
-      height: 100%;
-      display: block
-    }
-
-    .hint {
+    canvas#game {
       position: absolute;
-      bottom: 10px;
+      inset: 0;
+      touch-action: none;
+    }
+
+    .tapHint {
+      position: absolute;
       left: 50%;
-      transform: translateX(-50%);
-      background: #00000012;
-      color: #333;
-      padding: 6px 12px;
+      top: 68%;
+      transform: translate(-50%, -50%);
+      font-weight: 700;
+      background: rgba(0, 0, 0, .35);
+      padding: .45rem .7rem;
       border-radius: 999px;
-      font-size: 12px;
-      backdrop-filter: blur(4px)
+      border: 1px solid rgba(255, 255, 255, .15);
+      backdrop-filter: blur(6px);
     }
 
-    /* Toast */
-    .toast {
-      position: fixed;
-      left: 50%;
-      top: 14%;
-      transform: translateX(-50%) scale(.9);
-      opacity: 0;
-      transition: .18s ease;
-      z-index: 9
-    }
-
-    .toast.show {
-      opacity: 1;
-      transform: translateX(-50%) scale(1)
-    }
-
-    .toast .card {
-      background: #fff;
-      border-radius: 18px;
-      box-shadow: var(--shadow);
-      padding: 12px 16px;
-      border: 2px dashed var(--neon3);
-      text-align: center
-    }
-
-    .toast h3 {
-      margin: 0;
-      font-size: clamp(18px, 4.4vw, 24px)
-    }
-
-    /* Final modal */
-    .modal {
-      position: fixed;
-      inset: 0;
-      display: none;
-      place-items: center;
-      padding: 18px;
-      background: linear-gradient(180deg, rgba(255, 255, 255, .86), rgba(255, 255, 255, .94));
-      z-index: 10
-    }
-
-    .modal.show {
-      display: grid
-    }
-
-    .modal .card {
-      width: min(560px, 96vw);
-      background: #fff;
-      border-radius: 22px;
-      box-shadow: var(--shadow);
-      padding: 18px;
-      text-align: center;
-      position: relative;
-      overflow: hidden
-    }
-
-    .modal h2 {
-      margin: 6px 0 4px;
-      font-size: clamp(22px, 5vw, 30px)
-    }
-
-    .modal p {
-      margin: 0;
-      color: var(--soft)
-    }
-
-    .btn {
-      margin-top: 14px;
-      border: 0;
-      border-radius: 14px;
-      padding: 12px 16px;
-      font-weight: 900;
-      cursor: pointer;
-      background: linear-gradient(90deg, var(--neon1), var(--neon2));
-      color: #fff;
-      box-shadow: 0 8px 22px rgba(0, 0, 0, .14)
-    }
-
-    .confetti {
-      pointer-events: none;
-      position: fixed;
-      inset: 0;
-      z-index: 11
-    }
-
-    /* Floating sticker (Perfect! / Combo) */
-    .sticker {
+    .layerTag {
       position: absolute;
       left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%) scale(.8);
-      opacity: 0;
-      font-weight: 900;
-      color: #ff3d77;
-      text-shadow: 0 2px 0 #fff;
-      pointer-events: none
+      top: 10px;
+      transform: translateX(-50%);
+      font-size: 13px;
+      padding: .35rem .7rem;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, .3);
+      border: 1px solid rgba(255, 255, 255, .12);
+      backdrop-filter: blur(6px);
     }
 
-    .sticker.show {
-      animation: pop .6s ease forwards
+    .popup {
+      position: absolute;
+      left: 50%;
+      top: 30%;
+      transform: translateX(-50%);
+      font-size: 18px;
+      font-weight: 800;
+      border-radius: 14px;
+      padding: .7rem 1rem;
+      background: rgba(0, 0, 0, .55);
+      border: 1px solid rgba(255, 255, 255, .18);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .popup.show {
+      animation: pop 1.6s ease forwards
     }
 
     @keyframes pop {
       0% {
         opacity: 0;
-        transform: translate(-50%, -50%) scale(.6)
+        transform: translate(-50%, -8px) scale(.92)
       }
 
-      30% {
+      15% {
         opacity: 1;
-        transform: translate(-50%, -55%) scale(1.15)
+        transform: translate(-50%, 0) scale(1)
+      }
+
+      70% {
+        opacity: 1
       }
 
       100% {
         opacity: 0;
-        transform: translate(-50%, -70%) scale(1)
+        transform: translate(-50%, 12px) scale(.98)
       }
+    }
+
+    /* Win overlay with 3D trophy (WebGL) */
+    .win {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(10, 16, 30, .9), rgba(10, 16, 30, .9)), radial-gradient(800px 400px at 50% -10%, #20306455, transparent);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 10px
+    }
+
+    .win.show {
+      display: flex
+    }
+
+    #trophyGL {
+      width: min(520px, 90%);
+      height: min(520px, 90vw);
+      border-radius: 20px;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, .6), inset 0 0 0 1px rgba(255, 255, 255, .08);
+    }
+
+    .win h1 {
+      margin: .4rem 0 0;
+      font-size: clamp(18px, 4vw, 26px);
+      text-align: center
+    }
+
+    .win p {
+      margin: 0 12px 12px;
+      text-align: center;
+      opacity: .9
+    }
+
+    .btn {
+      cursor: pointer;
+      margin-top: 6px;
+      padding: .6rem 1rem;
+      border-radius: 999px;
+      border: none;
+      color: #00111a;
+      background: linear-gradient(90deg, #ffe27a, #ffd86b, #ffc36b);
+      font-weight: 800;
+      box-shadow: 0 6px 20px rgba(255, 210, 120, .45);
+    }
+
+    /* Cute micro UI bits */
+    .stardots {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(2px 2px at 20% 10%, #ffffff88, transparent 60%), radial-gradient(1.5px 1.5px at 60% 20%, #ffffff66, transparent 60%), radial-gradient(2px 2px at 80% 30%, #7ae2ff88, transparent 60%), radial-gradient(1.5px 1.5px at 30% 70%, #ff7ad988, transparent 60%), radial-gradient(2px 2px at 75% 85%, #ffffff66, transparent 60%);
+      filter: blur(.2px);
+      pointer-events: none
     }
   </style>
 </head>
@@ -276,526 +238,737 @@
 <body>
   <div class="wrap">
     <header>
-      <div class="title">🏀🍨 <span>Tap to Scoop: <strong>Dessert Basketball Miner</strong></span> <span
-          class="badge">Husaina Stadium</span></div>
-      <div class="hud">
-        <span class="pill" id="scoops">Scoops: 0 / 200</span>
-        <span class="pill" id="layer">Layer: Chocolate Fudge (1/10)</span>
-        <span class="pill">Combo: <span id="combo">x1</span></span>
-        <span class="pill">Dunk Meter <span class="meter" id="dunkMeter"></span></span>
-      </div>
+      <div class="title">🍨🏀 Tap to Scoop: <span style="color:var(--accent)">Dessert</span> <span
+          style="color:var(--accent2)">Basketball</span> Miner</div>
+      <div class="score" id="scoreLbl">Scoop Count: 0 / 200</div>
     </header>
 
-    <div class="progress" aria-label="Layer progress">
-      <div class="bar" id="bar"></div>
+    <div class="hud">
+      <div class="bars">
+        <div class="bar" title="Overall progress">
+          <div id="overallBar"></div>
+        </div>
+        <div class="labels"><span>Overall</span><span id="overallLbl">0%</span></div>
+        <div class="bar" title="Current layer">
+          <div id="layerBar"></div>
+        </div>
+        <div class="labels"><span id="layerName">Layer: —</span><span id="layerLbl">0%</span></div>
+      </div>
     </div>
 
     <div class="stage" id="stage">
-      <canvas id="game" aria-label="Tap area"></canvas>
-      <div class="hint">Tap fast — build combo! Swipe ⬇️⬆️ when the meter glows to Dunk Slam (cinematic).</div>
-      <div class="sticker" id="sticker">Perfect!</div>
+      <div class="stardots"></div>
+      <canvas id="game"></canvas>
+      <div class="tapHint">Tap / Click to scoop! ✨</div>
+      <div class="layerTag" id="layerTag">Chocolate Fudge</div>
+      <div class="popup" id="popup">🍨 Dessert MVP unlocked!</div>
+
+      <div class="win" id="win">
+        <canvas id="trophyGL"></canvas>
+        <h1>🏆 You Win, Husaina! Dessert MVP Forever.</h1>
+        <p>Golden chocolate basketball trophy unlocked. Tap below to replay!</p>
+        <button class="btn" id="playAgain">Play Again</button>
+      </div>
     </div>
   </div>
-
-  <!-- Meme Toast -->
-  <div class="toast" id="toast">
-    <div class="card">
-      <h3 id="toastMsg">🍨 Dessert MVP unlocked!</h3>
-    </div>
-  </div>
-
-  <!-- Final Trophy Modal -->
-  <div class="modal" id="modal">
-    <div class="card">
-      <h2>🏆 You Win, Husaina! Dessert MVP Forever</h2>
-      <p>Golden Chocolate Basketball Trophy. The crowd goes WILD.</p>
-      <canvas id="trophy" width="640" height="380" style="width:100%;height:auto"></canvas>
-      <button class="btn" id="close">Play again</button>
-    </div>
-  </div>
-
-  <canvas class="confetti" id="confetti"></canvas>
 
   <script>
-    "use strict";
-    /* =============================================================
-       Tap to Scoop — V4.1: "Kawaii Stadium" Edition (Bugfix build)
-       - Defensive JS (no document.write anywhere)
-       - Added gated test runner (#run-tests) with assertions
-       - Minor safety around audio context & events
-       ============================================================= */
+    // ============================================================
+    // Tap to Scoop — Leak & Empty Edition
+    // Fix: removed duplicate 'particles' declaration that caused a SyntaxError.
+    // Changes vs v1: Each layer now drains like a container with gooey drips.
+    // Single-file, offline. No libraries. WebGL trophy retained.
+    // ============================================================
 
-    // ---------- Constants ----------
-    const TOTAL_TAPS = 200;          // win at 200
-    const TAPS_PER_LAYER = 20;       // 10 layers
-    const TOTAL_LAYERS = TOTAL_TAPS / TAPS_PER_LAYER;
-    const DPR = Math.max(1, window.devicePixelRatio || 1);
+    (() => {
+      const DPR = Math.max(1, Math.min(2.5, window.devicePixelRatio || 1));
+      const canvas = document.getElementById('game');
+      const stage = document.getElementById('stage');
+      const ctx = canvas.getContext('2d');
 
-    // Popups every 20 taps (first 4 exact lines requested)
-    const POPS = [
-      "🍨 Dessert MVP unlocked!",
-      "🏀 Even Steph Curry doesn’t scoop this fast.",
-      "🍕 Pizza power level UP!",
-      "🍫 Chocolate stash secured!",
-      "✨ Scoop rhythm activated.",
-      "🧁 Frosting frenzy engaged.",
-      "🔥 Turbo caramel combo!",
-      "🎯 Nothing but net… of sprinkles.",
-      "🚀 Space-dunk incoming!",
-      "👑 You’re the Dessert GOAT."
-    ];
+      // UI elements
+      const scoreLbl = document.getElementById('scoreLbl');
+      const overallBar = document.getElementById('overallBar');
+      const overallLbl = document.getElementById('overallLbl');
+      const layerBar = document.getElementById('layerBar');
+      const layerLbl = document.getElementById('layerLbl');
+      const layerNameLbl = document.getElementById('layerName');
+      const layerTag = document.getElementById('layerTag');
+      const popup = document.getElementById('popup');
+      const winOverlay = document.getElementById('win');
 
-    // Layer definitions (alternating)
-    const TYPES = [
-      { key: 'fudge', name: 'Chocolate Fudge', base: '#5a2a10' },
-      { key: 'vanilla', name: 'Vanilla Ice Cream', base: '#fff1de' },
-      { key: 'pizza', name: 'Pizza Crust', base: '#e1a74b' },
-      { key: 'caramel', name: 'Caramel', base: '#c86a2f' }
-    ];
-    const LAYERS = Array.from({ length: TOTAL_LAYERS }, (_, i) => ({ ...TYPES[i % TYPES.length], index: i }));
-
-    // ---------- DOM ----------
-    const stage = document.getElementById('stage');
-    const canvas = document.getElementById('game');
-    const ctx = canvas.getContext('2d');
-    const off = document.createElement('canvas');
-    const offCtx = off.getContext('2d');
-
-    const scoopsEl = document.getElementById('scoops');
-    const layerEl = document.getElementById('layer');
-    const comboEl = document.getElementById('combo');
-    const meterEl = document.getElementById('dunkMeter');
-    const barEl = document.getElementById('bar');
-    const toast = document.getElementById('toast');
-    const toastMsg = document.getElementById('toastMsg');
-    const modal = document.getElementById('modal');
-    const closeBtn = document.getElementById('close');
-    const trophy = document.getElementById('trophy');
-    const confetti = document.getElementById('confetti');
-    const cctx = confetti.getContext('2d');
-    const sticker = document.getElementById('sticker');
-
-    // ---------- State ----------
-    const state = {
-      taps: 0, layerIndex: 0, hp: TAPS_PER_LAYER,
-      w: 300, h: 500, finished: false,
-      particles: [],
-      combo: 0, comboTime: 0, dunk: 0, dunkReady: false,
-      pulseT: 0, // rhythm circle timer
-      crowd: [], orbits: [],
-      confetti: [],
-      lastTouch: null,
-      shake: 0
-    };
-
-    // ---------- Audio ----------
-    const AC = window.AudioContext || window.webkitAudioContext;
-    const audio = AC ? new AC({ latencyHint: 'interactive' }) : null;
-    function blip(f1 = 320, f2 = 180, d = .12) {
-      try {
-        if (!audio) return; if (audio.state === 'suspended') audio.resume();
-        const t = audio.currentTime; const o = audio.createOscillator(); const g = audio.createGain(); const n = audio.createOscillator();
-        o.type = 'triangle'; o.frequency.setValueAtTime(f1, t); o.frequency.exponentialRampToValueAtTime(f2, t + d * .8);
-        n.type = 'square'; n.frequency.setValueAtTime(40, t); // tiny thump
-        g.gain.setValueAtTime(.22, t); g.gain.exponentialRampToValueAtTime(.001, t + d);
-        o.connect(g); n.connect(g); g.connect(audio.destination);
-        o.start(t); n.start(t); o.stop(t + d); n.stop(t + .06);
-      } catch { /* no-op */ }
-    }
-    function vibrate(ms) { if (navigator.vibrate) { try { navigator.vibrate(ms) } catch { } } }
-
-    // ---------- Layout ----------
-    function fit() {
-      const r = stage.getBoundingClientRect();
-      canvas.width = Math.floor(r.width * DPR); canvas.height = Math.floor(r.height * DPR);
-      canvas.style.width = r.width + 'px'; canvas.style.height = r.height + 'px';
-      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-      state.w = r.width; state.h = r.height;
-
-      off.width = canvas.width; off.height = canvas.height;
-
-      confetti.width = Math.floor(window.innerWidth * DPR);
-      confetti.height = Math.floor(window.innerHeight * DPR);
-      confetti.style.width = window.innerWidth + 'px';
-      confetti.style.height = window.innerHeight + 'px';
-      cctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-
-      buildLayerArt();
-      buildCrowd();
-      buildOrbits();
-    }
-
-    // ---------- Fun background (space court + dessert orbits + crowd) ----------
-    function buildOrbits() {
-      const { w, h } = state; state.orbits = [];
-      const items = [
-        { kind: 'donut', r: 22, color: '#ffb6c1' },
-        { kind: 'pizza', r: 26, color: '#ffcf70' },
-        { kind: 'scoop', r: 20, color: '#d6f0ff' }
+      // Game configuration
+      const TOTAL_TAPS = 200;  // final reward after 200 taps
+      const LAYERS = [
+        { name: 'Chocolate Fudge', key: 'choc', base: '#6a3a2c', mid: '#5a2d22', light: '#8a5c4a', glass: '#6a3a2c' },
+        { name: 'Vanilla Ice Cream', key: 'vanilla', base: '#fff7e6', mid: '#ffeccc', light: '#ffffff', glass: '#ffeccc' },
+        { name: 'Pizza Crust', key: 'crust', base: '#d8a15b', mid: '#c68841', light: '#f2c98a', glass: '#f2c98a' },
+        { name: 'Caramel', key: 'caramel', base: '#c46a2f', mid: '#b15522', light: '#e28a4d', glass: '#e28a4d' }
       ];
-      for (let i = 0; i < 14; i++) {
-        const it = items[i % items.length];
-        state.orbits.push({
-          kind: it.kind, r: it.r, color: it.color,
-          x: Math.random() * w, y: Math.random() * h * 0.5 + h * 0.02,
-          vx: (Math.random() * .3 + .1) * (Math.random() < .5 ? 1 : -1),
-          vy: 0.05 + Math.random() * .08
-        });
+      const LAYER_TAPS = TOTAL_TAPS / LAYERS.length; // 50 taps per layer
+
+      // Meme lines (every 20 taps)
+      const POP_LINES = [
+        '🍨 Dessert MVP unlocked!',
+        '🏀 Even Steph Curry doesn’t scoop this fast.',
+        '🍕 Pizza power level UP!',
+        '🍫 Chocolate stash secured!',
+        '💫 Kawaii scoop combo x3!',
+        '✨ Perfect tap timing — swish!',
+        '🍦 Extra sprinkles achieved!',
+        '🧇 Waffle-cone wind assist engaged!',
+      ];
+
+      // State
+      let score = 0;                 // total taps
+      let curLayerIndex = 0;         // which layer we’re in now
+      let curLayerTaps = 0;          // taps spent inside current layer
+      let particles = [];            // sprinkle/confetti particles (single declaration!)
+      let drips = [];                // gooey falling drops
+
+      // Sound: small dunk/beep using WebAudio (offline)
+      let audioCtx = null;
+      function beep() {
+        try {
+          if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          const o = audioCtx.createOscillator();
+          const g = audioCtx.createGain();
+          o.type = 'triangle';
+          o.frequency.value = 420 + Math.random() * 60;
+          o.connect(g); g.connect(audioCtx.destination);
+          const now = audioCtx.currentTime;
+          g.gain.setValueAtTime(0.0001, now);
+          g.gain.exponentialRampToValueAtTime(0.18, now + 0.01);
+          g.gain.exponentialRampToValueAtTime(0.0001, now + 0.12);
+          o.start(now); o.stop(now + 0.13);
+        } catch (e) {/* ignore */ }
       }
-    }
-    function drawOrbits() {
-      const { w, h } = state; ctx.save();
-      for (const o of state.orbits) {
-        o.x += o.vx; o.y += o.vy; if (o.x < -40) o.x = w + 40; if (o.x > w + 40) o.x = -40; if (o.y > h * 0.62) o.y = Math.random() * h * 0.15 + h * 0.02;
-        ctx.globalAlpha = .85; ctx.shadowColor = '#ffffff'; ctx.shadowBlur = 10;
-        if (o.kind === 'donut') {
-          ctx.fillStyle = o.color; ctx.beginPath(); ctx.arc(o.x, o.y, o.r, 0, Math.PI * 2); ctx.fill();
-          ctx.globalCompositeOperation = 'destination-out'; ctx.beginPath(); ctx.arc(o.x, o.y, o.r * 0.45, 0, Math.PI * 2); ctx.fill();
-          ctx.globalCompositeOperation = 'source-over';
-        } else if (o.kind === 'pizza') {
-          ctx.fillStyle = o.color; ctx.beginPath(); ctx.moveTo(o.x, o.y - o.r); ctx.lineTo(o.x + o.r, o.y + o.r); ctx.lineTo(o.x - o.r, o.y + o.r); ctx.closePath(); ctx.fill();
-          ctx.fillStyle = '#d24d45'; for (let k = 0; k < 3; k++) { ctx.beginPath(); ctx.arc(o.x + (k - 1) * 6, o.y + (k % 2 ? 2 : -3), 3.2, 0, Math.PI * 2); ctx.fill(); }
-        } else { // scoop
-          const grd = ctx.createRadialGradient(o.x - 4, o.y - 4, 2, o.x, o.y, o.r);
-          grd.addColorStop(0, '#ffffff'); grd.addColorStop(1, o.color);
-          ctx.fillStyle = grd; ctx.beginPath(); ctx.arc(o.x, o.y, o.r, 0, Math.PI * 2); ctx.fill();
+
+      // Resize canvas to fill stage
+      function resize() {
+        const rect = stage.getBoundingClientRect();
+        canvas.width = Math.floor(rect.width * DPR);
+        canvas.height = Math.floor(rect.height * DPR);
+        canvas.style.width = rect.width + 'px';
+        canvas.style.height = rect.height + 'px';
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      // Helpers
+      function rrect(x, y, w, h, r) {
+        const rr = Math.min(r, w / 2, h / 2);
+        ctx.beginPath();
+        ctx.moveTo(x + rr, y);
+        ctx.arcTo(x + w, y, x + w, y + h, rr);
+        ctx.arcTo(x + w, y + h, x, y + h, rr);
+        ctx.arcTo(x, y + h, x, y, rr);
+        ctx.arcTo(x, y, x + w, y, rr);
+        ctx.closePath();
+      }
+
+      // Cute starry backdrop inside the stage canvas
+      function drawBackground() {
+        const { width: W, height: H } = canvas;
+        const g = ctx.createLinearGradient(0, 0, 0, H);
+        g.addColorStop(0, '#0e1734');
+        g.addColorStop(1, '#091020');
+        ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+
+        // Neon rim vignettes
+        const rad = ctx.createRadialGradient(W * 0.5, H * -0.05, 10, W * 0.5, H * 0.1, H * 0.9);
+        rad.addColorStop(0, 'rgba(122,226,255,0.22)');
+        rad.addColorStop(1, 'transparent');
+        ctx.fillStyle = rad; ctx.fillRect(0, 0, W, H);
+
+        // Tiny stars
+        ctx.save();
+        ctx.globalAlpha = .4;
+        for (let i = 0; i < 60; i++) {
+          const x = (i * 127.3 % 1) * W; // pseudo-random
+          const y = (i * 47.7 % 1) * H;
+          ctx.fillStyle = i % 7 ? '#ffffff' : '#7ae2ff';
+          ctx.fillRect(x, y, DPR, DPR);
         }
-        ctx.shadowBlur = 0; ctx.globalAlpha = 1;
+        ctx.restore();
       }
-      ctx.restore();
-    }
-    function buildCrowd() {
-      // little dessert crowd along the baseline
-      const { w, h } = state; state.crowd = []; const N = 14; const y = h * 0.73;
-      for (let i = 0; i < N; i++) {
-        const x = (i + 0.5) * w / N + (Math.random() - 0.5) * 10;
-        const color = ['#ffd4e1', '#ffe8b5', '#d7f7ff', '#e8ffd8'][i % 4];
-        state.crowd.push({ x, y, r: 12 + Math.random() * 8, color, blink: Math.random() * 3 });
-      }
-    }
-    function drawCrowd(dt) {
-      for (const c of state.crowd) {
-        c.blink -= dt; const eye = c.blink > 0 ? 3 : 1; if (c.blink < -0.2) c.blink = 2 + Math.random() * 3;
-        // body
-        ctx.fillStyle = c.color; ctx.beginPath(); ctx.arc(c.x, c.y, c.r, Math.PI, 0); ctx.fill();
-        // eyes
-        ctx.fillStyle = '#222'; ctx.beginPath(); ctx.arc(c.x - c.r * 0.35, c.y - 2, eye, 0, Math.PI * 2); ctx.fill(); ctx.beginPath(); ctx.arc(c.x + c.r * 0.35, c.y - 2, eye, 0, Math.PI * 2); ctx.fill();
-        // bounce when shake
-        if (state.shake > 0) c.y += Math.sin(Date.now() / 80 + c.x) * 0.6 * state.shake;
-      }
-    }
 
-    // ---------- Dessert Mountain (layer art on offscreen) ----------
-    function drawBlob(target, W, H, color) {
-      // blobby layered mound with strata rings
-      const cx = W * .5, cy = H * .64; const rw = Math.min(W * .72, H * .8 * .72); const rh = Math.min(H * .62, W * 1.0 * .62);
-      target.fillStyle = color; target.beginPath();
-      target.moveTo(cx - rw * .8, cy);
-      target.bezierCurveTo(cx - rw, cy - rh * .6, cx - rw * .3, cy - rh * 1.0, cx, cy - rh * 1.05);
-      target.bezierCurveTo(cx + rw * .3, cy - rh * 1.0, cx + rw, cy - rh * .6, cx + rw * .8, cy);
-      target.bezierCurveTo(cx + rw * .6, cy + rh * .7, cx + rw * .3, cy + rh * .8, cx, cy + rh * .75);
-      target.bezierCurveTo(cx - rw * .3, cy + rh * .8, cx - rw * .6, cy + rh * .7, cx - rw * .8, cy);
-      target.closePath(); target.fill();
-      return { cx, cy, rw, rh };
-    }
+      // Draw jars indicating remaining content per layer (emptying visual)
+      function drawJars() {
+        const { width: W, height: H } = canvas;
+        const jarW = 42 * DPR, jarH = 74 * DPR, gap = 12 * DPR;
+        const right = W - 14 * DPR;
+        const top = 18 * DPR;
+        for (let i = 0; i < LAYERS.length; i++) {
+          const x = right - jarW;
+          const y = top + i * (jarH + gap);
+          // glass body
+          ctx.save();
+          ctx.globalAlpha = 0.95;
+          rrect(x, y, jarW, jarH, 10 * DPR);
+          ctx.fillStyle = 'rgba(255,255,255,0.06)';
+          ctx.fill();
+          ctx.strokeStyle = 'rgba(255,255,255,0.25)';
+          ctx.lineWidth = 1 * DPR; ctx.stroke();
+          // cap
+          ctx.fillStyle = 'rgba(255,255,255,0.1)';
+          ctx.fillRect(x, y - 8 * DPR, jarW, 8 * DPR);
+          ctx.strokeRect(x, y - 8 * DPR, jarW, 8 * DPR);
 
-    function buildLayerArt() {
-      const W = canvas.width, H = canvas.height; offCtx.setTransform(1, 0, 0, 1, 0, 0); offCtx.clearRect(0, 0, W, H);
-      offCtx.scale(DPR, DPR);
-      const layer = LAYERS[state.layerIndex];
-      drawBlob(offCtx, state.w, state.h, layer.base);
+          // Fill level
+          const full = 1.0;
+          let remaining = full;
+          if (i < curLayerIndex) remaining = 0; // already emptied
+          else if (i === curLayerIndex) remaining = 1 - (curLayerTaps / LAYER_TAPS);
+          else remaining = 1; // future layers still full
 
-      // Clip to blob to paint details
-      offCtx.save(); offCtx.clip();
-      switch (layer.key) {
-        case 'fudge': {
-          // glossy swirls + nuts + chocolate chips
-          offCtx.globalAlpha = .25; offCtx.strokeStyle = '#83421d'; offCtx.lineWidth = 10;
-          for (let i = 0; i < 6; i++) { const x = (i + 1) * state.w / 7; offCtx.beginPath(); offCtx.moveTo(x, state.h * .1); offCtx.bezierCurveTo(x - 20, state.h * .35, x + 20, state.h * .65, x - 10, state.h * .9); offCtx.stroke(); }
-          offCtx.globalAlpha = 1; offCtx.fillStyle = '#f6e2b4';
-          for (let i = 0; i < 30; i++) { const x = Math.random() * state.w * .8 + state.w * .1; const y = Math.random() * state.h * .55 + state.h * .22; offCtx.beginPath(); offCtx.ellipse(x, y, 4, 2, Math.random(), 0, Math.PI * 2); offCtx.fill(); }
-          offCtx.fillStyle = '#3a1b0b';
-          for (let i = 0; i < 20; i++) { const x = Math.random() * state.w * .8 + state.w * .1; const y = Math.random() * state.h * .55 + state.h * .22; offCtx.beginPath(); offCtx.moveTo(x, y - 3); offCtx.lineTo(x + 3, y + 2); offCtx.lineTo(x - 3, y + 2); offCtx.closePath(); offCtx.fill(); }
-          break;
-        }
-        case 'vanilla': {
-          // sprinkles + soft swirls
-          const cols = ['#ff4d6d', '#00c2ff', '#8a2be2', '#00e6a8', '#ffa600'];
-          for (let i = 0; i < 90; i++) { const x = Math.random() * state.w * .85 + state.w * .075; const y = Math.random() * state.h * .65 + state.h * .2; offCtx.save(); offCtx.translate(x, y); offCtx.rotate(Math.random() * Math.PI); offCtx.fillStyle = cols[i % cols.length]; offCtx.fillRect(-1.2, -6, 2.4, 12); offCtx.restore(); }
-          offCtx.globalAlpha = .18; offCtx.strokeStyle = '#e8d1ae'; offCtx.lineWidth = 9;
-          for (let i = 0; i < 4; i++) { offCtx.beginPath(); offCtx.arc(state.w * .5, state.h * (.3 + i * .12), state.w * .4, 0, Math.PI * 2); offCtx.stroke(); }
-          offCtx.globalAlpha = 1; break;
-        }
-        case 'pizza': {
-          // crust bubbles + toasty specks + tiny basil
-          for (let i = 0; i < 56; i++) { const x = Math.random() * state.w * .8 + state.w * .1; const y = Math.random() * state.h * .55 + state.h * .22; const r = 3 + Math.random() * 8; offCtx.fillStyle = i % 3 ? '#f2bf6a' : '#d28e3d'; offCtx.beginPath(); offCtx.arc(x, y, r, 0, Math.PI * 2); offCtx.fill(); }
-          offCtx.globalAlpha = .25; offCtx.fillStyle = '#8c4b1a';
-          for (let i = 0; i < 44; i++) { const x = Math.random() * state.w * .9 + state.w * .05; const y = Math.random() * state.h * .55 + state.h * .22; offCtx.beginPath(); offCtx.ellipse(x, y, 1.6, 3.6, Math.random() * Math.PI, 0, Math.PI * 2); offCtx.fill(); }
-          offCtx.globalAlpha = 1; offCtx.fillStyle = '#2e7d32';
-          for (let i = 0; i < 14; i++) { const x = Math.random() * state.w * .8 + state.w * .1; const y = Math.random() * state.h * .55 + state.h * .22; offCtx.beginPath(); offCtx.ellipse(x, y, 2.5, 5, Math.random() * Math.PI, 0, Math.PI * 2); offCtx.fill(); }
-          break;
-        }
-        case 'caramel': {
-          // shiny drips + glossy ribbons
-          offCtx.fillStyle = '#b45823';
-          for (let i = 0; i < 7; i++) { const x = (i + 1) * state.w / 8; const dripH = state.h * .15 + Math.random() * state.h * .08; offCtx.beginPath(); offCtx.moveTo(x - 25, state.h * .15); offCtx.bezierCurveTo(x - 10, state.h * .18, x + 10, state.h * .18, x + 25, state.h * .15); offCtx.lineTo(x + 10, state.h * .15); offCtx.bezierCurveTo(x + 6, dripH, x - 6, dripH, x - 10, state.h * .15); offCtx.closePath(); offCtx.fill(); }
-          offCtx.globalAlpha = .28; offCtx.strokeStyle = '#eaa26a'; offCtx.lineWidth = 10;
-          for (let i = 0; i < 3; i++) { offCtx.beginPath(); offCtx.moveTo(state.w * .15, state.h * (.3 + i * .18)); offCtx.quadraticCurveTo(state.w * .5, state.h * (.22 + i * .2), state.w * .85, state.h * (.34 + i * .18)); offCtx.stroke(); }
-          offCtx.globalAlpha = 1; break;
+          const h = Math.max(0, Math.min(jarH - 4 * DPR, (jarH - 4 * DPR) * remaining));
+          const fx = x + 2 * DPR, fy = y + (jarH - 2 * DPR) - h;
+          const ly = LAYERS[i];
+          const gg = ctx.createLinearGradient(0, fy, 0, fy + h);
+          gg.addColorStop(0, ly.light);
+          gg.addColorStop(1, ly.mid);
+          ctx.fillStyle = gg;
+          ctx.fillRect(fx, fy, jarW - 4 * DPR, h);
+          // cute face on jar
+          if (remaining > 0) {
+            const jcx = x + jarW / 2, jcy = fy + h * 0.5;
+            ctx.fillStyle = 'rgba(0,0,0,.5)';
+            ctx.beginPath(); ctx.arc(jcx - 8 * DPR, jcy, 2.2 * DPR, 0, Math.PI * 2); ctx.fill();
+            ctx.beginPath(); ctx.arc(jcx + 8 * DPR, jcy, 2.2 * DPR, 0, Math.PI * 2); ctx.fill();
+            ctx.strokeStyle = 'rgba(0,0,0,.45)'; ctx.lineWidth = 1 * DPR;
+            ctx.beginPath(); ctx.arc(jcx, jcy + 3 * DPR, 6 * DPR, .15 * Math.PI, .85 * Math.PI); ctx.stroke();
+          }
+          ctx.restore();
         }
       }
-      offCtx.restore();
 
-      // Rim light
-      offCtx.lineWidth = 6; offCtx.strokeStyle = 'rgba(255,255,255,.38)'; offCtx.stroke();
+      // Draw the dessert mountain with per-layer remaining fill
+      function drawMountain() {
+        const { width: W, height: H } = canvas;
+        const cx = W * 0.5, baseY = H * 0.80; // ground
+        const maxW = Math.min(W * 0.76, H * 0.72); // mound width
+        const height = H * 0.50;
 
-      // Shine overlay
-      const lg = offCtx.createLinearGradient(0, state.h * .2, 0, state.h * .9);
-      lg.addColorStop(0, 'rgba(255,255,255,.18)'); lg.addColorStop(1, 'rgba(255,255,255,0)');
-      offCtx.fillStyle = lg; offCtx.fillRect(0, 0, state.w, state.h);
-    }
+        // Ground court arc (neon)
+        ctx.save();
+        ctx.strokeStyle = 'rgba(255,255,255,.12)';
+        ctx.lineWidth = 2 * DPR;
+        ctx.beginPath();
+        ctx.ellipse(cx, baseY + 12 * DPR, maxW * 0.55, 18 * DPR, 0, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.restore();
 
-    function carveAt(x, y, big = false) {
-      // cut a circular scoop at CSS px (offscreen is DPR-scaled so multiply)
-      offCtx.save(); offCtx.globalCompositeOperation = 'destination-out'; offCtx.beginPath();
-      const base = Math.max(12, Math.min(state.w, state.h) * (big ? .09 : .04));
-      offCtx.arc(x * DPR, y * DPR, base * DPR, 0, Math.PI * 2); offCtx.fill(); offCtx.restore();
-    }
+        // For each layer from bottom to top
+        const layerH = height / LAYERS.length;
 
-    // ---------- Particles (sprinkles / hearts / chips) ----------
-    function addBurst(x, y, color) {
-      const kinds = ['sprinkle', 'chip', 'heart', 'pep'];
-      for (let i = 0; i < 22; i++) state.particles.push({
-        x, y, vx: (Math.random() - .5) * 200, vy: -140 - Math.random() * 160,
-        t: 0, life: .65 + Math.random() * .55, r: 2 + Math.random() * 3, c: color,
-        kind: kinds[i % kinds.length], rot: Math.random() * Math.PI
-      });
-    }
-    function updateBurst(dt) {
-      const g = 860; state.particles = state.particles.filter(p => { p.t += dt; p.x += p.vx * dt; p.y += p.vy * dt; p.vy += g * dt; p.rot += dt * 6; return p.t < p.life });
-    }
-    function drawBurst() {
-      for (const p of state.particles) {
-        const a = 1 - p.t / p.life; ctx.globalAlpha = a; ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
-        if (p.kind === 'sprinkle') { ctx.fillStyle = p.c; ctx.fillRect(-1, -6, 2, 12); }
-        else if (p.kind === 'chip') { ctx.fillStyle = '#3a1b0b'; ctx.beginPath(); ctx.moveTo(0, -3); ctx.lineTo(3, 2); ctx.lineTo(-3, 2); ctx.closePath(); ctx.fill(); }
-        else if (p.kind === 'pep') { ctx.fillStyle = '#d24d45'; ctx.beginPath(); ctx.arc(0, 0, 3.2, 0, Math.PI * 2); ctx.fill(); }
-        else { ctx.fillStyle = '#ff6aa9'; ctx.beginPath(); ctx.moveTo(0, -3); ctx.bezierCurveTo(3, -6, 7, -2, 0, 4); ctx.bezierCurveTo(-7, -2, -3, -6, 0, -3); ctx.fill(); }
-        ctx.restore(); ctx.globalAlpha = 1;
+        for (let i = 0; i < LAYERS.length; i++) {
+          const ly = LAYERS[i];
+          const top = baseY - (i + 1) * layerH;
+          const bottom = baseY - i * layerH;
+          const w = maxW * (1 - 0.07 * i);
+          const x = cx - w / 2;
+
+          // How much of this layer remains (1 full, 0 empty)
+          let remaining = 1;
+          if (i < curLayerIndex) remaining = 0;
+          else if (i === curLayerIndex) remaining = 1 - (curLayerTaps / LAYER_TAPS);
+          else remaining = 1;
+
+          const fillTop = bottom - (layerH * remaining);
+
+          // Base pill shape for the layer
+          ctx.save();
+          // Clip to the portion that is still filled
+          ctx.beginPath();
+          // Rounded rect for whole layer
+          const rr = 24 * DPR;
+          ctx.moveTo(x + rr, top);
+          ctx.arcTo(x + w, top, x + w, bottom, rr);
+          ctx.arcTo(x + w, bottom, x, bottom, rr);
+          ctx.arcTo(x, bottom, x, top, rr);
+          ctx.arcTo(x, top, x + w, top, rr);
+          // Now intersect a rectangle that starts at fillTop -> bottom
+          ctx.rect(x - 2 * DPR, fillTop, w + 4 * DPR, bottom - fillTop);
+          ctx.clip('nonzero');
+
+          // Fill gradient
+          const gg = ctx.createLinearGradient(0, top, 0, bottom);
+          gg.addColorStop(0, ly.light);
+          gg.addColorStop(.45, ly.base);
+          gg.addColorStop(1, ly.mid);
+          ctx.fillStyle = gg;
+          ctx.fillRect(x, top, w, layerH);
+
+          // Cartoon textures for fun (only render when some remaining)
+          if (remaining > 0.02) {
+            if (ly.key === 'vanilla') {
+              // sprinkles
+              for (let k = 0; k < 40; k++) {
+                const sx = x + (k * 53.7 % 1) * w;
+                const sy = top + (k * 17.9 % 1) * (layerH - 12 * DPR) + 6 * DPR;
+                if (sy < fillTop - 4 * DPR) continue; // don't draw above fill
+                ctx.save();
+                ctx.translate(sx, sy); ctx.rotate(((k * 31) % 360) * Math.PI / 180);
+                ctx.fillStyle = ['#ff7ad9', '#7ae2ff', '#8affc1', '#ffd36b'][k % 4];
+                ctx.fillRect(-2 * DPR, -.5 * DPR, 4 * DPR, 1 * DPR);
+                ctx.restore();
+              }
+            } else if (ly.key === 'crust') {
+              // toasted spots
+              ctx.fillStyle = 'rgba(120,60,10,.25)';
+              for (let k = 0; k < 20; k++) {
+                const sx = x + (k * 17.1 % 1) * w;
+                const sy = top + (k * 27.5 % 1) * (layerH - 12 * DPR) + 6 * DPR;
+                if (sy < fillTop - 4 * DPR) continue;
+                ctx.beginPath(); ctx.ellipse(sx, sy, 3 * DPR, 2 * DPR, 0, 0, Math.PI * 2); ctx.fill();
+              }
+            } else if (ly.key === 'caramel') {
+              // shiny streaks
+              ctx.strokeStyle = 'rgba(255,255,255,.18)';
+              ctx.lineWidth = 1.4 * DPR; ctx.beginPath();
+              for (let s = 0; s < 3; s++) {
+                const yy = top + (s + 1) * (layerH / 4);
+                if (yy < fillTop - 2 * DPR) continue;
+                ctx.moveTo(x + 10 * DPR, yy); ctx.quadraticCurveTo(cx, yy - 10 * DPR, x + w - 10 * DPR, yy);
+              }
+              ctx.stroke();
+            }
+          }
+
+          ctx.restore();
+
+          // Drippy lip at the draining boundary for current layer
+          if (i === curLayerIndex && remaining > 0 && remaining < 1) {
+            const lipY = fillTop + 2 * DPR;
+            ctx.save();
+            ctx.strokeStyle = 'rgba(255,255,255,.18)';
+            ctx.lineWidth = 1.2 * DPR;
+            for (let d = 0; d < 8; d++) {
+              const t = d / 8;
+              const dx = x + 12 * DPR + t * (w - 24 * DPR);
+              const l = (Math.sin((d * 37 + score) * .6) + 1) * 4 * DPR + 4 * DPR; // varying drip length
+              ctx.beginPath();
+              ctx.moveTo(dx, lipY);
+              ctx.quadraticCurveTo(dx + 2 * DPR, lipY + l * 0.6, dx, lipY + l);
+              ctx.stroke();
+            }
+            ctx.restore();
+          }
+
+          // Kawaii face on CURRENT layer (only if some fill left)
+          if (i === curLayerIndex && remaining > 0.05) {
+            const faceY = (fillTop + bottom) / 2 - layerH * 0.05;
+            const eyeDX = w * 0.16;
+            ctx.save();
+            ctx.fillStyle = 'rgba(0,0,0,.45)';
+            ctx.beginPath(); ctx.arc(cx - eyeDX, faceY, 5 * DPR, 0, Math.PI * 2); ctx.fill();
+            ctx.beginPath(); ctx.arc(cx + eyeDX, faceY, 5 * DPR, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = 'rgba(255,100,160,.35)';
+            ctx.beginPath(); ctx.ellipse(cx - eyeDX, faceY + 7 * DPR, 10 * DPR, 5 * DPR, 0, 0, Math.PI * 2); ctx.fill();
+            ctx.beginPath(); ctx.ellipse(cx + eyeDX, faceY + 7 * DPR, 10 * DPR, 5 * DPR, 0, 0, Math.PI * 2); ctx.fill();
+            ctx.strokeStyle = 'rgba(0,0,0,.5)'; ctx.lineWidth = 1.6 * DPR; ctx.lineCap = 'round';
+            ctx.beginPath(); ctx.arc(cx, faceY + 3 * DPR, 10 * DPR, .15 * Math.PI, .85 * Math.PI); ctx.stroke();
+            ctx.restore();
+          }
+        }
+
+        // Hoop hovering above
+        ctx.save();
+        const hoopY = baseY - height - 30 * DPR;
+        ctx.strokeStyle = 'rgba(255,244,200,.8)'; ctx.lineWidth = 3 * DPR; ctx.shadowBlur = 12 * DPR; ctx.shadowColor = 'rgba(255,200,120,.8)';
+        ctx.beginPath(); ctx.ellipse(cx, hoopY, 50 * DPR, 14 * DPR, 0, 0, Math.PI * 2); ctx.stroke();
+        ctx.shadowBlur = 0; ctx.lineWidth = 1.5 * DPR; ctx.strokeStyle = 'rgba(255,255,255,.15)';
+        ctx.beginPath(); ctx.moveTo(cx - 55 * DPR, hoopY - 8 * DPR); ctx.lineTo(cx - 55 * DPR, hoopY - 50 * DPR);
+        ctx.moveTo(cx + 55 * DPR, hoopY - 8 * DPR); ctx.lineTo(cx + 55 * DPR, hoopY - 50 * DPR); ctx.stroke();
+        ctx.restore();
       }
-    }
 
-    // ---------- Toast & Confetti ----------
-    let toastTimer = null;
-    function popToast(text) {
-      toastMsg.textContent = text; toast.classList.add('show');
-      clearTimeout(toastTimer); toastTimer = setTimeout(() => toast.classList.remove('show'), 1200);
-    }
-    function startConfetti() {
-      const N = 160; state.confetti = []; const W = confetti.width / DPR, H = confetti.height / DPR;
-      for (let i = 0; i < N; i++) state.confetti.push({ x: Math.random() * W, y: -20 - Math.random() * H * 0.5, vx: (Math.random() - .5) * 60, vy: 60 + Math.random() * 140, r: 2 + Math.random() * 4, col: ["#8a2be2", "#00e6a8", "#ff4d6d", "#ffa600"][i % 4], a: Math.random() * Math.PI });
-    }
-    function drawConfetti(dt) {
-      const W = confetti.width / DPR, H = confetti.height / DPR; cctx.clearRect(0, 0, W, H);
-      state.confetti.forEach(f => { f.x += f.vx * dt; f.y += f.vy * dt; f.a += dt * 8; cctx.save(); cctx.translate(f.x, f.y); cctx.rotate(f.a); cctx.fillStyle = f.col; cctx.globalAlpha = .95; cctx.fillRect(-f.r, -f.r, f.r * 2, f.r * 2); cctx.restore(); });
-      state.confetti = state.confetti.filter(f => f.y < H + 30);
-    }
+      // Gooey drop particles that fall when you tap (layer-colored)
+      function spawnDrips(x, y) {
+        const ly = LAYERS[curLayerIndex];
+        for (let i = 0; i < 10; i++) {
+          drips.push({
+            x, y,
+            vx: (Math.random() - 0.5) * 1.8 * DPR,
+            vy: (-Math.random() * 1.2 - 0.6) * DPR,
+            g: 0.06 * DPR,
+            r: (Math.random() * 4 + 3) * DPR, // radius
+            c1: ly.light,
+            c2: ly.mid,
+            life: 120
+          });
+        }
+      }
 
-    // ---------- Trophy ----------
-    function drawTrophy() {
-      const tctx = trophy.getContext('2d'); const w = trophy.width, h = trophy.height; tctx.setTransform(1, 0, 0, 1, 0, 0); tctx.clearRect(0, 0, w, h);
-      const g = tctx.createRadialGradient(w / 2, h * .55, 30, w / 2, h * .55, 260); g.addColorStop(0, '#fff7d1'); g.addColorStop(1, '#ffffff'); tctx.fillStyle = g; tctx.fillRect(0, 0, w, h);
-      // pedestal
-      tctx.fillStyle = '#5a2a10'; tctx.fillRect(w * .3, h * .8, w * .4, h * .06);
-      // cup + stem
-      tctx.save(); tctx.translate(w * .5, h * .57); tctx.scale(1.25, 1.25);
-      tctx.fillStyle = '#f0c420'; tctx.beginPath(); tctx.moveTo(-90, 20); tctx.bezierCurveTo(-100, -30, 100, -30, 90, 20); tctx.lineTo(70, 40); tctx.lineTo(-70, 40); tctx.closePath(); tctx.fill();
-      tctx.lineWidth = 5; tctx.strokeStyle = '#fff0a6'; tctx.stroke();
-      tctx.beginPath(); tctx.moveTo(-20, 60); tctx.lineTo(20, 60); tctx.lineTo(10, 20); tctx.lineTo(-10, 20); tctx.closePath(); tctx.fillStyle = '#d4a017'; tctx.fill();
-      // handles
-      tctx.beginPath(); tctx.moveTo(-90, 10); tctx.bezierCurveTo(-130, 0, -120, 50, -90, 55); tctx.moveTo(90, 10); tctx.bezierCurveTo(130, 0, 120, 50, 90, 55); tctx.lineWidth = 6; tctx.strokeStyle = '#d4a017'; tctx.stroke();
-      // chocolate basketball
-      tctx.beginPath(); tctx.arc(0, -5, 38, 0, Math.PI * 2); tctx.fillStyle = '#6b3a1a'; tctx.fill(); tctx.lineWidth = 3; tctx.strokeStyle = '#3f210e'; tctx.stroke();
-      tctx.beginPath(); tctx.arc(0, -5, 38, 0, Math.PI * 2); tctx.moveTo(-40, -5); tctx.lineTo(40, -5); tctx.moveTo(0, -43); tctx.lineTo(0, 33); tctx.strokeStyle = '#2b1407'; tctx.lineWidth = 2.4; tctx.stroke();
-      // sparkles
-      for (let i = 0; i < 8; i++) { const a = i / 8 * Math.PI * 2, x = Math.cos(a) * 70, y = Math.sin(a) * 70 - 10; tctx.beginPath(); tctx.moveTo(x, y - 6); tctx.lineTo(x, y + 6); tctx.moveTo(x - 6, y); tctx.lineTo(x + 6, y); tctx.strokeStyle = '#ffd860'; tctx.lineWidth = 2; tctx.stroke(); }
-      tctx.restore();
-      // caption
-      tctx.fillStyle = '#231f1a'; tctx.font = 'bold 20px system-ui,-apple-system,Segoe UI,Roboto'; tctx.textAlign = 'center'; tctx.fillText('You Win, Husaina! Dessert MVP Forever', w / 2, h * .12);
-    }
+      function drawDrips() {
+        for (let i = drips.length - 1; i >= 0; i--) {
+          const d = drips[i];
+          d.vx *= 0.995; d.vy += d.g; d.x += d.vx; d.y += d.vy; d.life--;
+          // draw gradient blob
+          const rg = ctx.createRadialGradient(d.x - d.r * 0.3, d.y - d.r * 0.3, d.r * 0.1, d.x, d.y, d.r);
+          rg.addColorStop(0, d.c1); rg.addColorStop(1, d.c2);
+          ctx.fillStyle = rg; ctx.beginPath(); ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2); ctx.fill();
+          if (d.life <= 0 || d.y > canvas.height + 40 * DPR) drips.splice(i, 1);
+        }
+      }
 
-    // ---------- Rhythm pulse (timing bonus visual) ----------
-    function drawPulse() {
-      state.pulseT += 1 / 60; const T = 0.6; const p = (state.pulseT % T) / T; // 0..1 loop
-      const r = 46 + p * 40; const alpha = 1 - p; const x = state.w * .5, y = state.h * .18;
-      ctx.save(); ctx.globalAlpha = alpha * 0.6; ctx.strokeStyle = 'rgba(0,230,168,.9)'; ctx.lineWidth = 4; ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.stroke(); ctx.restore();
-    }
-    function nearPulse() {
-      // window for "Perfect!" (cosmetic)
-      const T = 0.6; const p = (state.pulseT % T) / T; return (p > 0.45 && p < 0.55);
-    }
+      // Sprinkle confetti for taps (kept from v1 for extra cuteness)
+      function spawnSprinkles(x, y) {
+        const colors = ['#ff7ad9', '#7ae2ff', '#8affc1', '#ffd36b', '#ffffff'];
+        for (let i = 0; i < 14; i++) {
+          particles.push({
+            x, y, vx: (Math.random() - 0.5) * 2.2 * DPR, vy: (-Math.random() * 3.0 - 1) * DPR,
+            r: Math.random() * Math.PI, rv: (Math.random() - 0.5) * 0.2,
+            s: (Math.random() * 3 + 2) * DPR, c: colors[i % colors.length], life: 28 + Math.floor(Math.random() * 18)
+          });
+        }
+      }
+      function drawSprinkles() {
+        for (let i = particles.length - 1; i >= 0; i--) {
+          const p = particles[i];
+          p.vy += 0.08 * DPR; p.vx *= 0.99; p.x += p.vx; p.y += p.vy; p.life -= 1;
+          ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r); p.r += p.rv;
+          ctx.fillStyle = p.c; ctx.fillRect(-p.s / 2, -p.s / 2, p.s, p.s);
+          ctx.restore();
+          if (p.life <= 0 || p.y > canvas.height + 40 * DPR) particles.splice(i, 1);
+        }
+      }
 
-    // ---------- Game Loop ----------
-    let last = 0; function loop(ts) { const dt = Math.min(.033, (ts - last) / 1000 || 0); last = ts; render(dt); requestAnimationFrame(loop); }
+      // Popup meme text every 20 taps
+      function showPopup() {
+        const idx = Math.floor(score / 20) % POP_LINES.length;
+        popup.textContent = POP_LINES[idx];
+        popup.classList.remove('show'); void popup.offsetWidth; popup.classList.add('show');
+      }
 
-    function render(dt) {
-      ctx.clearRect(0, 0, state.w, state.h);
+      // Update HUD
+      function updateHUD() {
+        scoreLbl.textContent = `Scoop Count: ${score} / ${TOTAL_TAPS}`;
+        const overallPct = Math.floor((score / TOTAL_TAPS) * 100);
+        overallBar.style.width = overallPct + '%';
+        overallLbl.textContent = overallPct + '%';
 
-      // background stars
-      ctx.save();
-      for (let i = 0; i < 70; i++) { const x = (i * 137) % state.w; const y = (i * 191) % (state.h * .6); ctx.globalAlpha = ((i % 7) + 3) / 10; ctx.fillStyle = ['#d3e6ff', '#ffd3e6', '#d3fff3'][i % 3]; ctx.fillRect(x, y, 2, 2); } ctx.globalAlpha = 1;
-      // neon court outline + rim
-      ctx.strokeStyle = 'rgba(138,43,226,.7)'; ctx.lineWidth = 4; ctx.shadowColor = '#8a2be2'; ctx.shadowBlur = 18; const m = 18; ctx.strokeRect(m, state.h * .14, state.w - m * 2, state.h * .62);
-      ctx.beginPath(); ctx.strokeStyle = 'rgba(0,230,168,.85)'; ctx.lineWidth = 6; ctx.shadowColor = '#00e6a8'; ctx.arc(state.w * .5, state.h * .18, 60, 0, Math.PI * 2); ctx.stroke(); ctx.shadowBlur = 0;
-      ctx.restore();
+        const layerPct = Math.max(0, Math.min(100, Math.floor((curLayerTaps / LAYER_TAPS) * 100)));
+        layerBar.style.width = layerPct + '%';
+        layerLbl.textContent = layerPct + '%';
+        const curName = LAYERS[curLayerIndex]?.name || '—';
+        layerNameLbl.textContent = 'Layer: ' + curName;
+        layerTag.textContent = curName;
+      }
 
-      drawPulse(); // rhythm ring under rim
+      // Handle a tap
+      function onTap(px, py) {
+        if (score >= TOTAL_TAPS) return; // already won
+        score++;
+        curLayerTaps++;
+        beep();
 
-      // dessert orbits + crowd
-      drawOrbits();
-      drawCrowd(dt);
+        // Spawn goo + sprinkles at the layer lip position
+        const { width: W, height: H } = canvas;
+        const cx = W * 0.5, baseY = H * 0.80; const height = H * 0.50; const layerH = height / LAYERS.length;
+        const w = Math.min(W * 0.76, H * 0.72) * (1 - 0.07 * curLayerIndex);
+        const x = cx - w / 2;
+        const bottom = baseY - curLayerIndex * layerH;
+        const remaining = 1 - (curLayerTaps / LAYER_TAPS);
+        const fillTop = bottom - (layerH * remaining);
+        const tapX = x + (0.2 + 0.6 * Math.random()) * w; // random along lip for variety
+        const tapY = fillTop + 2 * DPR;
 
-      // screen shake
-      if (state.shake > 0) { state.shake = Math.max(0, state.shake - dt * 6); const s = state.shake; ctx.save(); ctx.translate((Math.random() - .5) * 6 * s, (Math.random() - .5) * 6 * s); }
+        spawnDrips(tapX, tapY);
+        spawnSprinkles(tapX, tapY);
 
-      // blit layer
-      ctx.drawImage(off, 0, 0, canvas.width, canvas.height, 0, 0, state.w, state.h);
+        if (score % 20 === 0) showPopup();
 
-      if (state.shake > 0) ctx.restore();
+        // Move to next layer when done
+        if (curLayerTaps >= LAYER_TAPS) {
+          curLayerIndex++;
+          curLayerTaps = 0;
+        }
 
-      // particles
-      updateBurst(dt); drawBurst();
+        updateHUD();
 
-      // confetti (if any)
-      drawConfetti(dt);
-    }
+        // Win condition
+        if (score >= TOTAL_TAPS) {
+          setTimeout(() => showWin(), 400);
+        }
+      }
 
-    // ---------- Input ----------
-    function tapAt(clientX, clientY) {
-      if (state.finished) return; if (audio && audio.state === 'suspended') audio.resume();
-      const r = canvas.getBoundingClientRect(); const x = clientX - r.left; const y = clientY - r.top;
-      const wasPerfect = nearPulse();
-      carveAt(x, y);
-      addBurst(x, y, LAYERS[state.layerIndex].base);
-      blip(wasPerfect ? 360 : 320, wasPerfect ? 160 : 180, .12);
-      vibrate(10);
-      if (wasPerfect) { sticker.textContent = 'Perfect!'; sticker.classList.remove('show'); void sticker.offsetWidth; sticker.classList.add('show'); }
+      // Pointer/touch events
+      canvas.addEventListener('pointerdown', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const x = (e.clientX - rect.left) * DPR;
+        const y = (e.clientY - rect.top) * DPR;
+        onTap(x, y);
+      }, { passive: true });
 
-      // combo & dunk meter (visual only)
-      state.comboTime = 0.9; state.combo = Math.min(99, state.combo + 1); comboEl.textContent = 'x' + Math.max(1, Math.floor(state.combo / 5));
-      state.dunk = Math.min(100, state.dunk + 4); meterEl.style.setProperty('--p', state.dunk);
-      if (state.dunk >= 100) { state.dunkReady = true; meterEl.style.boxShadow = '0 0 0 3px rgba(255,77,109,.35)'; }
-
-      state.taps++; state.hp--; state.shake = .6;
-
+      // Main loop
+      function loop() {
+        drawBackground();
+        drawMountain();
+        drawJars();
+        drawDrips();
+        drawSprinkles();
+        requestAnimationFrame(loop);
+      }
+      loop();
       updateHUD();
 
-      if (state.taps % 20 === 0) {
-        const idx = state.taps / 20 - 1; // 0..9
-        if (state.taps === TOTAL_TAPS) { win(); } else { popToast(POPS[idx] || 'Keep scooping!'); }
+      // ===============================
+      // WIN: WebGL golden chocolate basketball trophy
+      // ===============================
+      const glCanvas = document.getElementById('trophyGL');
+      const playAgainBtn = document.getElementById('playAgain');
+      let gl, prog, attribs = {}, uniforms = {}, buffers = {}, animId;
+
+      function showWin() {
+        winOverlay.classList.add('show');
+        glCanvas.width = Math.floor(glCanvas.clientWidth * DPR);
+        glCanvas.height = Math.floor(glCanvas.clientHeight * DPR);
+
+        try { initGL(); drawGL(); }
+        catch (e) { console.warn('WebGL failed, showing 2D fallback', e); drawFallback2D(); }
       }
 
-      if (state.hp <= 0 && state.layerIndex < TOTAL_LAYERS - 1) {
-        state.layerIndex++; state.hp = TAPS_PER_LAYER; buildLayerArt(); barEl.style.width = '0%'; popToast('Layer cleared! Next: ' + LAYERS[state.layerIndex].name + ' ▶');
+      function hideWin() {
+        winOverlay.classList.remove('show');
+        if (animId) cancelAnimationFrame(animId);
+        // reset game
+        score = 0; curLayerIndex = 0; curLayerTaps = 0; particles.length = 0; drips.length = 0; updateHUD();
       }
-    }
+      playAgainBtn.addEventListener('click', hideWin);
 
-    // swipe ↓↑ for Dunk Slam (cinematic). Big carve but no extra HP skip.
-    function onPointerDown(e) {
-      const t = e.touches ? e.touches[0] : e; state.lastTouch = { x: t.clientX, y: t.clientY, time: performance.now() };
-      tapAt(t.clientX, t.clientY);
-    }
-    function onPointerUp(e) {
-      if (!state.lastTouch) return; const t = e.changedTouches ? e.changedTouches[0] : e; const dy = t.clientY - state.lastTouch.y; const dt = performance.now() - state.lastTouch.time;
-      if (state.dunkReady && dy > 60 && dt < 500) { // swipe down then up within 0.5s
-        // wait for upward flick
-        window.addEventListener('pointermove', waitUpOnce, { once: true });
-        window.addEventListener('touchmove', waitUpOnce, { once: true });
+      function initGL() {
+        gl = glCanvas.getContext('webgl', { antialias: true, alpha: true });
+        if (!gl) throw new Error('No WebGL');
+
+        const vs = `
+      attribute vec3 aPos; 
+      attribute vec3 aNormal;
+      uniform mat4 uProj, uView, uModel;
+      varying vec3 vNormal; 
+      varying vec3 vWorldPos;
+      void main(){
+        vec4 wp = uModel * vec4(aPos,1.0);
+        vWorldPos = wp.xyz;
+        vNormal = mat3(uModel) * aNormal;
+        gl_Position = uProj * uView * wp;
       }
-    }
-    function waitUpOnce(ev) {
-      const t = ev.touches ? ev.touches[0] : ev; const dyUp = t.clientY - (state.lastTouch ? state.lastTouch.y : t.clientY);
-      if (dyUp < -60) {
-        dunkCinematic();
+    `;
+        const fs = `
+      precision mediump float;
+      varying vec3 vNormal; 
+      varying vec3 vWorldPos;
+      uniform vec3 uLightDir; // directional light
+      uniform vec3 uCamPos;
+      uniform float uTime;
+
+      vec3 goldBase(){ return vec3(0.86, 0.66, 0.24); }
+
+      void main(){
+        vec3 N = normalize(vNormal);
+        vec3 L = normalize(uLightDir);
+        vec3 V = normalize(uCamPos - vWorldPos);
+        vec3 H = normalize(L+V);
+
+        float diff = max(dot(N,L), 0.0);
+        float spec = pow(max(dot(N,H),0.0), 48.0);
+
+        float theta = acos(clamp(N.y, -1.0, 1.0));
+        float phi = atan(N.z, N.x);
+
+        float w = 0.06;
+        float equator = 1.0 - smoothstep(0.0, w, abs(theta - 1.5708));
+        float longs = 1.0 - smoothstep(0.0, w, abs(sin(2.0*phi)));
+        float groove = max(equator, longs);
+
+        vec3 base = goldBase();
+        vec3 grooveCol = vec3(0.22,0.12,0.08);
+        base = mix(base, grooveCol, groove*0.85);
+
+        float shimmer = 0.05 * sin(uTime*0.8 + phi*6.0) + 0.05;
+        vec3 color = base * (0.35 + 0.75*diff) + spec*vec3(1.2) + shimmer;
+        float rim = pow(1.0 - max(dot(N,V),0.0), 2.5);
+        color += rim*0.15;
+
+        gl_FragColor = vec4(color, 1.0);
       }
-    }
-    function dunkCinematic() {
-      state.dunk = 0; state.dunkReady = false; meterEl.style.setProperty('--p', 0); meterEl.style.boxShadow = 'none';
-      // center slam
-      carveAt(state.w / 2, state.h * .45, true); addBurst(state.w / 2, state.h * .45, '#ff4d6d'); blip(400, 160, .2); vibrate(30); state.shake = 1.1;
-      sticker.textContent = 'DUNK SLAM!'; sticker.classList.remove('show'); void sticker.offsetWidth; sticker.classList.add('show');
-    }
+    `;
 
-    canvas.addEventListener('pointerdown', e => { e.preventDefault(); onPointerDown(e); }, { passive: false });
-    canvas.addEventListener('touchstart', e => { e.preventDefault(); onPointerDown(e); }, { passive: false });
-    canvas.addEventListener('pointerup', e => { onPointerUp(e); }, { passive: true });
-    canvas.addEventListener('touchend', e => { onPointerUp(e); }, { passive: true });
-    window.addEventListener('keydown', e => { if (e.code === 'Space') { const r = canvas.getBoundingClientRect(); tapAt(r.left + state.w / 2, r.top + state.h * .55); } });
+        function compile(type, src) {
+          const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s);
+          if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+            throw new Error(gl.getShaderInfoLog(s));
+          }
+          return s;
+        }
+        const vsObj = compile(gl.VERTEX_SHADER, vs);
+        const fsObj = compile(gl.FRAGMENT_SHADER, fs);
+        prog = gl.createProgram(); gl.attachShader(prog, vsObj); gl.attachShader(prog, fsObj); gl.linkProgram(prog);
+        if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(prog));
+        gl.useProgram(prog);
 
-    // decay combo timer
-    setInterval(() => { if (state.comboTime > 0) { state.comboTime -= 0.2; if (state.comboTime <= 0) { state.combo = 0; comboEl.textContent = 'x1'; } } }, 200);
+        attribs.aPos = gl.getAttribLocation(prog, 'aPos');
+        attribs.aNormal = gl.getAttribLocation(prog, 'aNormal');
+        uniforms.uProj = gl.getUniformLocation(prog, 'uProj');
+        uniforms.uView = gl.getUniformLocation(prog, 'uView');
+        uniforms.uModel = gl.getUniformLocation(prog, 'uModel');
+        uniforms.uLightDir = gl.getUniformLocation(prog, 'uLightDir');
+        uniforms.uCamPos = gl.getUniformLocation(prog, 'uCamPos');
+        uniforms.uTime = gl.getUniformLocation(prog, 'uTime');
 
-    // ---------- HUD ----------
-    function updateHUD() {
-      scoopsEl.textContent = `Scoops: ${state.taps} / ${TOTAL_TAPS}`;
-      layerEl.textContent = `Layer: ${LAYERS[state.layerIndex].name} (${state.layerIndex + 1}/${TOTAL_LAYERS})`;
-      const p = 100 * (1 - state.hp / TAPS_PER_LAYER); barEl.style.width = p.toFixed(1) + '%';
-    }
+        const sphere = makeSphere(1.0, 42, 64);
+        buffers.sphere = makeVBO(sphere);
 
-    // ---------- Win ----------
-    function win() {
-      state.finished = true; popToast('👑 Dessert Champion!');
-      modal.classList.add('show'); drawTrophy(); startConfetti();
-    }
-    closeBtn.addEventListener('click', () => { modal.classList.remove('show'); reset(); });
-
-    function reset() { state.taps = 0; state.layerIndex = 0; state.hp = TAPS_PER_LAYER; state.finished = false; state.combo = 0; state.dunk = 0; state.dunkReady = false; buildLayerArt(); updateHUD(); barEl.style.width = '0%'; state.confetti = []; }
-
-    // ---------- Init ----------
-    window.addEventListener('resize', fit);
-    fit();
-    updateHUD();
-    requestAnimationFrame(loop);
-
-    // expose tiny API for tweaking in console
-    window.__scoopV4 = { state, reset, buildLayerArt };
-
-    /* =============================================================
-       TEST RUNNER (manual opt-in):
-       Add #run-tests to the page URL hash to run basic assertions.
-       These tests DO NOT alter normal gameplay unless you opt-in.
-       ============================================================= */
-    (function runTestsIfAsked() {
-      if (location.hash !== '#run-tests') return;
-      const results = [];
-      function assert(name, cond) { results.push({ name, pass: !!cond }); }
-      try {
-        // Test 1: initial state
-        assert('initial taps = 0', state.taps === 0);
-        assert('initial hp = 20', state.hp === TAPS_PER_LAYER);
-
-        // Test 2: simulate 3 taps
-        const r = canvas.getBoundingClientRect();
-        tapAt(r.left + state.w * 0.5, r.top + state.h * 0.5);
-        tapAt(r.left + state.w * 0.52, r.top + state.h * 0.52);
-        tapAt(r.left + state.w * 0.48, r.top + state.h * 0.48);
-        assert('taps increased to 3', state.taps === 3);
-        assert('hp decreased to 17', state.hp === TAPS_PER_LAYER - 3);
-
-        // Test 3: advance to popup boundary (20 taps)
-        while (state.taps % 20 !== 0) { tapAt(r.left + state.w * 0.5, r.top + state.h * 0.5); }
-        assert('toast element exists', !!toast && !!toastMsg);
-
-        // Test 4: complete the game (200 taps total)
-        while (state.taps < TOTAL_TAPS) { tapAt(r.left + state.w * 0.5, r.top + state.h * 0.5); }
-        assert('modal shows on win', modal.classList.contains('show'));
-      } catch (err) {
-        console.error('Test runner error:', err);
-        results.push({ name: 'runner crashed', pass: false, err: String(err) });
+        gl.enable(gl.DEPTH_TEST);
+        gl.viewport(0, 0, glCanvas.width, glCanvas.height);
       }
-      console.group('Tap to Scoop — Test Results');
-      for (const r of results) { console[r.pass ? 'log' : 'error'](`${r.pass ? '✅' : '❌'} ${r.name}${r.err ? ' — ' + r.err : ''}`); }
-      console.groupEnd();
+
+      function makeVBO(geo) {
+        const o = {};
+        o.vbo = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, o.vbo);
+        const packed = new Float32Array(geo.positions.length + geo.normals.length);
+        for (let i = 0; i < geo.positions.length / 3; i++) {
+          packed[i * 6 + 0] = geo.positions[i * 3 + 0];
+          packed[i * 6 + 1] = geo.positions[i * 3 + 1];
+          packed[i * 6 + 2] = geo.positions[i * 3 + 2];
+          packed[i * 6 + 3] = geo.normals[i * 3 + 0];
+          packed[i * 6 + 4] = geo.normals[i * 3 + 1];
+          packed[i * 6 + 5] = geo.normals[i * 3 + 2];
+        }
+        gl.bufferData(gl.ARRAY_BUFFER, packed, gl.STATIC_DRAW);
+
+        o.ibo = gl.createBuffer(); gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, o.ibo);
+        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(geo.indices), gl.STATIC_DRAW);
+        o.count = geo.indices.length;
+        return o;
+      }
+
+      function makeSphere(r, stacks, slices) {
+        const positions = [], normals = [], indices = [];
+        for (let i = 0; i <= stacks; i++) {
+          const v = i / stacks; const phi = v * Math.PI; // 0..PI
+          for (let j = 0; j <= slices; j++) {
+            const u = j / slices; const theta = u * Math.PI * 2; // 0..2PI
+            const x = r * Math.cos(theta) * Math.sin(phi);
+            const y = r * Math.cos(phi);
+            const z = r * Math.sin(theta) * Math.sin(phi);
+            positions.push(x, y, z); normals.push(x, y, z);
+          }
+        }
+        for (let i = 0; i < stacks; i++) {
+          for (let j = 0; j < slices; j++) {
+            const a = i * (slices + 1) + j;
+            const b = a + (slices + 1);
+            indices.push(a, b, a + 1, b, b + 1, a + 1);
+          }
+        }
+        return { positions, normals, indices };
+      }
+
+      function perspective(out, fovy, aspect, near, far) {
+        const f = 1.0 / Math.tan(fovy / 2), nf = 1 / (near - far);
+        out[0] = f / aspect; out[1] = 0; out[2] = 0; out[3] = 0;
+        out[4] = 0; out[5] = f; out[6] = 0; out[7] = 0;
+        out[8] = 0; out[9] = 0; out[10] = (far + near) * nf; out[11] = -1;
+        out[12] = 0; out[13] = 0; out[14] = 2 * far * near * nf; out[15] = 0; return out;
+      }
+      function lookAt(out, eye, center, up) {
+        const x0 = eye[0], x1 = eye[1], x2 = eye[2];
+        let zx = x0 - center[0], zy = x1 - center[1], zz = x2 - center[2];
+        let len = 1 / Math.hypot(zx, zy, zz); zx *= len; zy *= len; zz *= len;
+        let xx = up[1] * zz - up[2] * zy, xy = up[2] * zx - up[0] * zz, xz = up[0] * zy - up[1] * zx;
+        len = 1 / Math.hypot(xx, xy, xz); xx *= len; xy *= len; xz *= len;
+        let yx = zy * xz - zz * xy, yy = zz * xx - zx * xz, yz = zx * xy - zy * xx;
+        out[0] = xx; out[1] = yx; out[2] = zx; out[3] = 0;
+        out[4] = xy; out[5] = yy; out[6] = zy; out[7] = 0;
+        out[8] = xz; out[9] = yz; out[10] = zz; out[11] = 0;
+        out[12] = -(xx * x0 + xy * x1 + xz * x2);
+        out[13] = -(yx * x0 + yy * x1 + yz * x2);
+        out[14] = -(zx * x0 + zy * x1 + zz * x2);
+        out[15] = 1; return out;
+      }
+      function identity(m) { m.set([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]); return m; }
+      function rotateY(out, a) { const c = Math.cos(a), s = Math.sin(a); out.set([c, 0, -s, 0, 0, 1, 0, 0, s, 0, c, 0, 0, 0, 0, 1]); return out; }
+      function scale(out, s) { out[0] *= s; out[5] *= s; out[10] *= s; return out; }
+
+      function drawGL() {
+        const aspect = glCanvas.width / glCanvas.height;
+        const proj = new Float32Array(16), view = new Float32Array(16), model = new Float32Array(16);
+        perspective(proj, Math.PI / 3, aspect, 0.1, 100.0);
+        const eye = [0, 0, 4.2], center = [0, 0, 0], up = [0, 1, 0];
+        lookAt(view, eye, center, up);
+
+        gl.clearColor(0.0, 0.0, 0.0, 0.0);
+        let t0 = performance.now();
+
+        function frame() {
+          const t = (performance.now() - t0) / 1000;
+          gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+          identity(model);
+          rotateY(model, t * 0.9);
+          scale(model, 1.0 + Math.sin(t * 2.0) * 0.03);
+
+          gl.useProgram(prog);
+          gl.uniformMatrix4fv(uniforms.uProj, false, proj);
+          gl.uniformMatrix4fv(uniforms.uView, false, view);
+          gl.uniformMatrix4fv(uniforms.uModel, false, model);
+          gl.uniform3f(uniforms.uLightDir, -0.4, 0.6, 0.3);
+          gl.uniform3f(uniforms.uCamPos, eye[0], eye[1], eye[2]);
+          gl.uniform1f(uniforms.uTime, t);
+
+          gl.bindBuffer(gl.ARRAY_BUFFER, buffers.sphere.vbo);
+          gl.enableVertexAttribArray(attribs.aPos);
+          gl.enableVertexAttribArray(attribs.aNormal);
+          const stride = 6 * 4; // 6 floats
+          gl.vertexAttribPointer(attribs.aPos, 3, gl.FLOAT, false, stride, 0);
+          gl.vertexAttribPointer(attribs.aNormal, 3, gl.FLOAT, false, stride, 3 * 4);
+          gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffers.sphere.ibo);
+          gl.drawElements(gl.TRIANGLES, buffers.sphere.count, gl.UNSIGNED_SHORT, 0);
+
+          animId = requestAnimationFrame(frame);
+        }
+        frame();
+      }
+
+      // Fallback 2D trophy (if WebGL not available)
+      function drawFallback2D() {
+        const c = glCanvas; const g = c.getContext('2d');
+        const W = c.width = Math.floor(c.clientWidth * DPR);
+        const H = c.height = Math.floor(c.clientHeight * DPR);
+        g.clearRect(0, 0, W, H);
+        const cx = W / 2, cy = H / 2, r = Math.min(W, H) * 0.28;
+        const grad = g.createRadialGradient(cx - r * 0.3, cy - r * 0.3, r * 0.1, cx, cy, r);
+        grad.addColorStop(0, '#ffe27a'); grad.addColorStop(1, '#8e6a24');
+        g.fillStyle = grad; g.beginPath(); g.arc(cx, cy, r, 0, Math.PI * 2); g.fill();
+        g.strokeStyle = '#2a1a10'; g.lineWidth = 3 * DPR;
+        g.beginPath(); g.arc(cx, cy, r * 0.98, 0, Math.PI * 2); g.stroke();
+        g.beginPath(); g.moveTo(cx - r, cy); g.lineTo(cx + r, cy); g.stroke();
+        g.beginPath(); g.arc(cx, cy, r, Math.PI * 0.5, Math.PI * 1.5); g.stroke();
+      }
+
+      // -----------------------------
+      // Minimal self-tests (console)
+      // -----------------------------
+      function runTests() {
+        const results = [];
+        const assert = (name, cond) => { results.push([name, !!cond]); (cond ? console.log : console.error)(`TEST ${cond ? 'PASS' : 'FAIL'}: ${name}`); };
+
+        assert('particles exists & is array', Array.isArray(particles));
+        const beforeP = particles.length; spawnSprinkles(100 * DPR, 100 * DPR); assert('spawnSprinkles adds items', particles.length > beforeP);
+        const beforeD = drips.length; spawnDrips(120 * DPR, 90 * DPR); assert('spawnDrips adds items', drips.length > beforeD);
+
+        // try drawing a few frames; should not throw
+        let ok = true; try { for (let i = 0; i < 5; i++) { drawSprinkles(); drawDrips(); } } catch (e) { ok = false; console.error(e); }
+        assert('draw* functions run', ok);
+
+        ok = true; try { updateHUD(); } catch (e) { ok = false; console.error(e); }
+        assert('updateHUD runs', ok);
+
+        window.__TEST_RESULTS__ = results;
+      }
+      setTimeout(runTests, 300);
     })();
   </script>
 </body>
